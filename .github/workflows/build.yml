@@ -1,0 +1,31 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-2019
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    env:
+      COMPONENT_NAME: foo_listenbrainz2
+
+    strategy:
+      matrix:
+        configuration: ['Release', 'Debug']
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: recursive
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    - name: Build
+      run: msbuild /m '/p:Platform=Win32;Configuration=${{ matrix.configuration }}' src\${{ env.COMPONENT_NAME }}.sln
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.COMPONENT_NAME }}-${{ matrix.configuration }}
+        path: component/

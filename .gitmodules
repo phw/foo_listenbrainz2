@@ -1,0 +1,3 @@
+[submodule "foobar2000-sdk"]
+	path = foobar2000-sdk
+	url = https://github.com/marc2k3/foobar2000-sdk

@@ -42,9 +42,17 @@ namespace lbz
 
 		void on_playback_new_track(metadb_handle_ptr handle) override
 		{
-			const double length = handle->get_length();
-			m_target = length < 5.0 ? SIZE_MAX : min(static_cast<size_t>(length) >> 1, 240);
 			m_counter = 0;
+			const double length = handle->get_length();
+			if (length >= 5.0 && prefs::check_enabled.get_value())
+			{
+				const size_t half = static_cast<size_t>(std::round(length / 2));
+				m_target = std::min<size_t>(half, 240U);
+			}
+			else
+			{
+				m_target = SIZE_MAX;
+			}
 		}
 
 		void on_playback_time(double) override

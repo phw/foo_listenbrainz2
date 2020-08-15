@@ -123,26 +123,20 @@ namespace lbz
 	void http_task::submit_cache()
 	{
 		json cache = get_cache();
-		if (cache.size() > 0)
+		if (cache.empty()) return;
+
+		if (cache.size() > cache_max)
 		{
-			json j;
-			j["listen_type"] = "import";
-
-			if (cache.size() <= cache_max)
-			{
-				j["payload"] = cache;
-			}
-			else
-			{
-				std::vector<json> tmp = cache;
-				tmp.resize(cache_max);
-				j["payload"] = tmp;
-			}
-
-			spam(PFC_string_formatter() << "Now submitting " << j["payload"].size() << " listen(s) from the cache.");
-
-			auto task = new http_task(listen_type::import, j);
-			SimpleThreadPool::instance().enqueue(task);
+			cache.get_ref<json::array_t&>().resize(cache_max);
 		}
+
+		json j;
+		j["listen_type"] = "import";
+		j["payload"] = cache;
+
+		spam(PFC_string_formatter() << "Now submitting " << cache.size() << " listen(s) from the cache.");
+
+		auto task = new http_task(listen_type::import, j);
+		SimpleThreadPool::instance().enqueue(task);
 	}
 }

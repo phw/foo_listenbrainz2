@@ -1,4 +1,4 @@
-## ListenBrainz
+## ListenBrainz 2
 
 ### Minimum requirements
 
@@ -25,7 +25,7 @@ Note that [foobar2000](https://foobar2000.org) does not support reading `UFID` t
 
 ### Preferences
 
-Enter your [ListenBrainz token](https://listenbrainz.org/profile) and check the other options under `File>Preferences>Tools>ListenBrainz`.
+Enter your [ListenBrainz token](https://listenbrainz.org/profile) and check the other options under `File>Preferences>Tools>ListenBrainz 2`.
 
 ![Preferences](preferences.png)
 

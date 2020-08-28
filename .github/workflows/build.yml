@@ -6,8 +6,6 @@ jobs:
   build:
     runs-on: windows-2019
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    env:
-      COMPONENT_NAME: foo_listenbrainz2
 
     strategy:
       matrix:
@@ -21,11 +19,16 @@ jobs:
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v1.0.0
 
+    - name: Set repo variable
+      run: |
+        $repo = "${{ github.repository }}".Split("/")[1]
+        echo "::set-env name=REPO::$repo"
+
     - name: Build
-      run: msbuild /m '/p:Platform=Win32;Configuration=${{ matrix.configuration }}' src\${{ env.COMPONENT_NAME }}.sln
+      run: msbuild /m '/p:Platform=Win32;Configuration=${{ matrix.configuration }}' src\${{ env.REPO }}.sln
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.COMPONENT_NAME }}-${{ matrix.configuration }}
+        name: ${{ env.REPO }}-${{ matrix.configuration }}
         path: component/

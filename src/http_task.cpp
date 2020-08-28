@@ -58,11 +58,7 @@ namespace lbz
 				}
 				else
 				{
-					json tmp = json::array();
-					for (size_t i = cache_max; i < cache.size(); ++i)
-					{
-						tmp.emplace_back(cache[i]);
-					}
+					json tmp(cache.begin() + cache_max, cache.end());
 					prefs::str_cache = tmp.dump().c_str();
 					submit_cache();
 				}

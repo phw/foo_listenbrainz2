@@ -66,8 +66,7 @@ namespace lbz
 			if (m_check_enabled.IsChecked() != prefs::check_enabled.get_value()) return true;
 			if (m_check_library.IsChecked() != prefs::check_library.get_value()) return true;
 
-			pfc::string8 temp;
-
+			pfc::string8_fast temp;
 			uGetWindowText(m_edit_user_token, temp);
 			if (prefs::str_user_token != temp) return true;
 

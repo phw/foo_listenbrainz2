@@ -55,28 +55,24 @@ namespace lbz
 			m_check_library.EnableWindow(enabled);
 
 			m_edit_user_token = GetDlgItem(IDC_EDIT_USER_TOKEN);
-			uSetWindowText(m_edit_user_token, prefs::str_user_token);
+			pfc::setWindowText(m_edit_user_token, prefs::str_user_token);
 			m_edit_user_token.EnableWindow(enabled);
 
 			return FALSE;
 		}
 
-		bool has_changed()
-		{
-			if (m_check_enabled.IsChecked() != prefs::check_enabled.get_value()) return true;
-			if (m_check_library.IsChecked() != prefs::check_library.get_value()) return true;
-
-			pfc::string8_fast temp;
-			uGetWindowText(m_edit_user_token, temp);
-			if (prefs::str_user_token != temp) return true;
-
-			return false;
-		}
-
 		uint32_t get_state() override
 		{
+			auto has_changed = [&]()
+			{
+				if (m_check_enabled.IsChecked() != prefs::check_enabled.get_value()) return true;
+				if (m_check_library.IsChecked() != prefs::check_library.get_value()) return true;
+				if (!pfc::getWindowText(m_edit_user_token).equals(prefs::str_user_token)) return true;
+				return false;
+			}();
+
 			uint32_t state = preferences_state::resettable;
-			if (has_changed()) state |= preferences_state::changed;
+			if (has_changed) state |= preferences_state::changed;
 			return state;
 		}
 
@@ -84,7 +80,7 @@ namespace lbz
 		{
 			prefs::check_enabled = m_check_enabled.IsChecked();
 			prefs::check_library = m_check_library.IsChecked();
-			uGetWindowText(m_edit_user_token, prefs::str_user_token);
+			prefs::str_user_token = pfc::getWindowText(m_edit_user_token);
 		}
 
 		void on_change()
@@ -100,7 +96,7 @@ namespace lbz
 		{
 			m_check_enabled.SetCheck(prefs::defaults::check_enabled);
 			m_check_library.SetCheck(prefs::defaults::check_library);
-			uSetWindowText(m_edit_user_token, prefs::defaults::str_user_token);
+			pfc::setWindowText(m_edit_user_token, prefs::defaults::str_user_token);
 
 			on_change();
 		}

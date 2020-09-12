@@ -2,12 +2,12 @@
 
 namespace lbz
 {
-	class http_task : public SimpleThreadTask
+	class http_task
 	{
 	public:
 		http_task(listen_type type, json data);
 
-		void run() override;
+		void run();
 
 	private:
 		json get_cache();

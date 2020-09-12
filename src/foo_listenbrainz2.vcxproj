@@ -114,7 +114,6 @@ copy /Y "$(TargetPath)" "%component_path%\"</Command>
     <ClInclude Include="preferences.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="foo_listenbrainz2.cpp">
@@ -127,7 +126,6 @@ copy /Y "$(TargetPath)" "%component_path%\"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="foo_listenbrainz2.rc" />

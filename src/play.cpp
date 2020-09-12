@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "http_task.h"
 
+#include <thread>
 #include <regex>
 using std::regex;
 
@@ -207,8 +208,13 @@ namespace lbz
 
 			j["payload"][0]["track_metadata"] = track_metadata;
 
-			auto task = new http_task(type, j);
-			SimpleThreadPool::instance().enqueue(task);
+			auto t = std::thread([=]()
+				{
+					http_task task(type, j);
+					task.run();
+				});
+
+			t.detach();
 		}
 
 		size_t m_counter = 0;

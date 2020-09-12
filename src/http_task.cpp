@@ -132,7 +132,7 @@ namespace lbz
 
 		spam(PFC_string_formatter() << "Now submitting " << cache.size() << " listen(s) from the cache.");
 
-		auto task = new http_task(listen_type::import, j);
-		SimpleThreadPool::instance().enqueue(task);
+		http_task task(listen_type::import, j);
+		task.run();
 	}
 }

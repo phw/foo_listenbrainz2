@@ -17,12 +17,12 @@ jobs:
         submodules: recursive
 
     - name: Set up MSBuild
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Set repo variable
       run: |
         $repo = "${{ github.repository }}".Split("/")[1]
-        echo "::set-env name=REPO::$repo"
+        echo "REPO=$repo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: Build
       run: msbuild /m '/p:Platform=Win32;Configuration=${{ matrix.configuration }}' src\${{ env.REPO }}.sln

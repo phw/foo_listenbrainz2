@@ -19,7 +19,7 @@ namespace lbz
 		prefs::str_cache = cache.dump().c_str();
 	}
 
-	void http_task::process_json(json j)
+	void http_task::process_response(json j)
 	{
 		auto status = j["status"];
 		auto code = j["code"];
@@ -88,13 +88,13 @@ namespace lbz
 
 		try
 		{
-			auto response = request->run_ex("https://api.listenbrainz.org/1/submit-listens", fb2k::noAbort);
+			auto response = request->run_ex(api_url, fb2k::noAbort);
 			response->read_string_raw(buffer, fb2k::noAbort);
 
 			json j = json::parse(buffer.get_ptr(), nullptr, false);
 			if (j.is_object())
 			{
-				process_json(j);
+				process_response(j);
 				return;
 			}
 

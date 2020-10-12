@@ -2,8 +2,6 @@
 #include "http_task.h"
 
 #include <thread>
-#include <regex>
-using std::regex;
 
 namespace lbz
 {
@@ -100,14 +98,34 @@ namespace lbz
 				return false;
 			}
 
-			return true;
-		}
+			if (prefs::check_skip.get_value() && !prefs::str_query.is_empty())
+			{
+				search_filter_v2::ptr filter;
 
-		bool is_uuid(const char* mbid)
-		{
-			if (mbid == nullptr) return false;
-			regex rx("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
-			return regex_search(mbid, rx);
+				try
+				{
+					filter = search_filter_manager_v2::get()->create_ex(prefs::str_query.get_ptr(), fb2k::service_new<completion_notify_dummy>(), search_filter_manager_v2::KFlagSuppressNotify);
+				}
+				catch (...) {}
+
+				if (filter.is_valid())
+				{
+					metadb_handle_list items = pfc::list_single_ref_t<metadb_handle_ptr>(handle);
+
+					pfc::array_t<bool> mask;
+					mask.set_size(items.get_count());
+					filter->test_multi(items, mask.get_ptr());
+					items.filter_mask(mask.get_ptr());
+
+					if (items.get_count() == 1)
+					{
+						if (report) spam("Track matches skip query. Not submitting.");
+						return false;
+					}
+				}
+			}
+
+			return true;
 		}
 
 		json get_additional_info(const file_info& info)
@@ -116,8 +134,8 @@ namespace lbz
 
 			for (const std::string& name : standard_tags)
 			{
-				const char* value = info.meta_get(name.c_str(), 0);
-				if (value != nullptr)
+				std::string value = get_tag(info, name);
+				if (!value.empty())
 				{
 					if (name == "album artist")
 					{
@@ -169,15 +187,35 @@ namespace lbz
 			return additional_info;
 		}
 
+		std::string get_tag(const file_info& info, const std::string& name)
+		{
+			if (name == "artist" && !prefs::check_artist_first.get_value())
+			{
+				if (m_obj.is_empty())
+				{
+					titleformat_compiler::get()->compile_force(m_obj, "[%artist%]");
+				}
+				pfc::string8 artist;
+				playback_control::get()->playback_format_title(nullptr, artist, m_obj, nullptr, playback_control::display_level_all);
+				return artist.get_ptr();
+			}
+			else
+			{
+				const char* value = info.meta_get(name.c_str(), 0);
+				if (value == nullptr) return std::string();
+				return value;
+			}
+		}
+
 		void submit(listen_type type)
 		{
 			metadb_handle_ptr handle;
 			if (!playback_control::get()->get_now_playing(handle)) return;
 			const file_info_impl info = handle->get_info_ref()->info();
 
-			const char* artist = info.meta_get("ARTIST", 0);
-			const char* title = info.meta_get("TITLE", 0);
-			if (artist == nullptr || title == nullptr) return;
+			std::string artist = get_tag(info, "artist");
+			std::string title = get_tag(info, "title");
+			if (artist.empty() || title.empty()) return;
 
 			if (!check_preferences(handle, type)) return;
 
@@ -197,7 +235,7 @@ namespace lbz
 				j["listen_type"] = "single";
 				j["payload"][0]["listened_at"] = pfc::fileTimeWtoU(pfc::fileTimeNow());
 
-				const char* album = info.meta_get("ALBUM", 0);
+				const char* album = info.meta_get("album", 0);
 				if (album != nullptr)
 				{
 					track_metadata["release_name"] = album;
@@ -219,6 +257,7 @@ namespace lbz
 
 		size_t m_counter = 0;
 		size_t m_target = SIZE_MAX;
+		titleformat_object::ptr m_obj;
 	};
 
 	FB2K_SERVICE_FACTORY(lbz_play_callback_static);

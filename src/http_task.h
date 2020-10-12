@@ -12,7 +12,7 @@ namespace lbz
 	private:
 		json get_cache();
 		void cache();
-		void process_json(json j);
+		void process_response(json j);
 		void reset_cache();
 		void submit_cache();
 

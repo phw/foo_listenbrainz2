@@ -62,7 +62,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\foobar2000-sdk;..\foobar2000-sdk\wtl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\foobar2000-sdk;..\foobar2000-sdk\extra;..\foobar2000-sdk\wtl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -88,7 +88,7 @@ copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\foobar2000-sdk;..\foobar2000-sdk\wtl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\foobar2000-sdk;..\foobar2000-sdk\extra;..\foobar2000-sdk\wtl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -105,7 +105,8 @@ copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"</Command>
     </Link>
     <PostBuildEvent>
       <Command>set component_path=$(SolutionDir)..\component
-copy /Y "$(TargetPath)" "%component_path%\"</Command>
+copy /Y "$(TargetPath)" "%component_path%\"
+copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -120,6 +121,7 @@ copy /Y "$(TargetPath)" "%component_path%\"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="http_task.cpp" />
+    <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="play.cpp" />
     <ClCompile Include="preferences.cpp" />
     <ClCompile Include="stdafx.cpp">

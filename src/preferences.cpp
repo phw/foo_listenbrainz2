@@ -1,36 +1,33 @@
 #include "stdafx.h"
 
-namespace guids
-{
-	static constexpr GUID preferences_page = { 0x3c92ef3b, 0xd3d7, 0x43e0, { 0xa5, 0xe0, 0x7, 0xf8, 0x14, 0xa0, 0x55, 0xfb } };
-
-	static constexpr GUID check_enabled = { 0xf2a8a44c, 0x8a82, 0x4cf5, { 0xa3, 0x4f, 0x41, 0xef, 0xbe, 0xd8, 0x2d, 0x8e } };
-	static constexpr GUID check_library = { 0x9175b5e1, 0xeea1, 0x44b2, { 0x99, 0xc3, 0x45, 0x0, 0x9d, 0xff, 0x9f, 0x7b } };
-
-	static constexpr GUID str_user_token = { 0x3d9164f6, 0xb3b0, 0x403f, { 0xb1, 0x42, 0x44, 0x7c, 0x5d, 0xdf, 0x4f, 0x15 } };
-	static constexpr GUID str_cache = { 0x1b2db62, 0x2d12, 0x4fcb, { 0xbb, 0xc3, 0x87, 0x2f, 0xd4, 0x28, 0xf7, 0x2d } };
-}
-
-namespace prefs
-{
-	namespace defaults
-	{
-		static constexpr bool check_enabled = false;
-		static constexpr bool check_library = false;
-
-		static constexpr const char* str_user_token = "";
-		static constexpr const char* str_cache = "[]"; // empty JSON array
-	}
-
-	cfg_bool check_enabled(guids::check_enabled, defaults::check_enabled);
-	cfg_bool check_library(guids::check_library, defaults::check_library);
-
-	cfg_string str_user_token(guids::str_user_token, defaults::str_user_token);
-	cfg_string str_cache(guids::str_cache, defaults::str_cache);
-}
-
 namespace lbz
 {
+	namespace prefs
+	{
+		namespace defaults
+		{
+			static constexpr bool check_enabled = false;
+			static constexpr bool check_artist_first = true;
+			static constexpr bool check_library = false;
+			static constexpr bool check_skip = false;
+
+			static constexpr const char* str_user_token = "";
+			static constexpr const char* str_query = "%genre% IS k-pop";
+
+			static constexpr const char* str_cache = "[]"; // empty JSON array
+		}
+
+		cfg_bool check_enabled(guids::check_enabled, defaults::check_enabled);
+		cfg_bool check_artist_first(guids::check_artist_first, defaults::check_artist_first);
+		cfg_bool check_library(guids::check_library, defaults::check_library);
+		cfg_bool check_skip(guids::check_skip, defaults::check_skip);
+
+		cfg_string str_user_token(guids::str_user_token, defaults::str_user_token);
+		cfg_string str_query(guids::str_query, defaults::str_query);
+
+		cfg_string str_cache(guids::str_cache, defaults::str_cache);
+	}
+
 	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public preferences_page_instance
 	{
 	public:
@@ -38,7 +35,7 @@ namespace lbz
 
 		BEGIN_MSG_MAP_EX(lbz_preferences_page_instance)
 			MSG_WM_INITDIALOG(OnInitDialog)
-			COMMAND_RANGE_HANDLER_EX(IDC_CHECK_ENABLED, IDC_EDIT_USER_TOKEN, OnChanged)
+			COMMAND_RANGE_HANDLER_EX(IDC_CHECK_ENABLED, IDC_EDIT_QUERY, OnChanged)
 		END_MSG_MAP()
 
 		enum { IDD = IDD_PREFERENCES };
@@ -50,13 +47,25 @@ namespace lbz
 			m_check_enabled = GetDlgItem(IDC_CHECK_ENABLED);
 			m_check_enabled.SetCheck(enabled);
 
+			m_check_artist_first = GetDlgItem(IDC_CHECK_ARTIST_FIRST);
+			m_check_artist_first.SetCheck(prefs::check_artist_first.get_value());
+			m_check_artist_first.EnableWindow(enabled);
+
 			m_check_library = GetDlgItem(IDC_CHECK_LIBRARY);
 			m_check_library.SetCheck(prefs::check_library.get_value());
 			m_check_library.EnableWindow(enabled);
 
+			m_check_skip = GetDlgItem(IDC_CHECK_SKIP);
+			m_check_skip.SetCheck(prefs::check_skip.get_value());
+			m_check_skip.EnableWindow(enabled);
+
 			m_edit_user_token = GetDlgItem(IDC_EDIT_USER_TOKEN);
 			pfc::setWindowText(m_edit_user_token, prefs::str_user_token);
 			m_edit_user_token.EnableWindow(enabled);
+
+			m_edit_query = GetDlgItem(IDC_EDIT_QUERY);
+			pfc::setWindowText(m_edit_query, prefs::str_query);
+			m_edit_query.EnableWindow(enabled && prefs::check_skip.get_value());
 
 			return FALSE;
 		}
@@ -66,8 +75,11 @@ namespace lbz
 			auto has_changed = [&]()
 			{
 				if (m_check_enabled.IsChecked() != prefs::check_enabled.get_value()) return true;
+				if (m_check_artist_first.IsChecked() != prefs::check_artist_first.get_value()) return true;
 				if (m_check_library.IsChecked() != prefs::check_library.get_value()) return true;
+				if (m_check_skip.IsChecked() != prefs::check_skip.get_value()) return true;
 				if (!pfc::getWindowText(m_edit_user_token).equals(prefs::str_user_token)) return true;
+				if (!pfc::getWindowText(m_edit_query).equals(prefs::str_query)) return true;
 				return false;
 			}();
 
@@ -79,15 +91,21 @@ namespace lbz
 		void apply() override
 		{
 			prefs::check_enabled = m_check_enabled.IsChecked();
+			prefs::check_artist_first = m_check_artist_first.IsChecked();
 			prefs::check_library = m_check_library.IsChecked();
+			prefs::check_skip = m_check_skip.IsChecked();
 			prefs::str_user_token = pfc::getWindowText(m_edit_user_token);
+			prefs::str_query = pfc::getWindowText(m_edit_query);
 		}
 
 		void on_change()
 		{
 			const bool enabled = m_check_enabled.IsChecked();
+			m_check_artist_first.EnableWindow(enabled);
 			m_check_library.EnableWindow(enabled);
+			m_check_skip.EnableWindow(enabled);
 			m_edit_user_token.EnableWindow(enabled);
+			m_edit_query.EnableWindow(enabled && m_check_skip.IsChecked());
 
 			m_callback->on_state_changed();
 		}
@@ -95,8 +113,11 @@ namespace lbz
 		void reset() override
 		{
 			m_check_enabled.SetCheck(prefs::defaults::check_enabled);
+			m_check_artist_first.SetCheck(prefs::defaults::check_artist_first);
 			m_check_library.SetCheck(prefs::defaults::check_library);
+			m_check_skip.SetCheck(prefs::defaults::check_skip);
 			pfc::setWindowText(m_edit_user_token, prefs::defaults::str_user_token);
+			pfc::setWindowText(m_edit_query, prefs::defaults::str_query);
 
 			on_change();
 		}
@@ -107,9 +128,8 @@ namespace lbz
 		}
 
 	private:
-		CCheckBox m_check_enabled;
-		CCheckBox m_check_library;
-		CEdit m_edit_user_token;
+		CCheckBox m_check_enabled, m_check_library, m_check_skip, m_check_artist_first;
+		CEdit m_edit_user_token, m_edit_query;
 		preferences_page_callback::ptr m_callback;
 	};
 
@@ -124,6 +144,12 @@ namespace lbz
 		GUID get_parent_guid() override
 		{
 			return preferences_page::guid_tools;
+		}
+
+		bool get_help_url(pfc::string_base& out) override
+		{
+			out.set_string("https://github.com/EliasAlucard/foo_listenbrainz2");
+			return true;
 		}
 
 		const char* get_name() override

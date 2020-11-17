@@ -1,11 +1,17 @@
 ## ListenBrainz 2
 
+A foobar2000 component to submit the music you listened to to [ListenBrainz](https://listenbrainz.org).
+
+This component was originally written by [marc2k3](https://github.com/marc2k3/).
+This repository is an attempt to preserve the source code of this excellent
+component and hopefully to revive the development.
+
 ### Minimum requirements
 
 `Windows 7` and [foobar2000](https://foobar2000.org) `v1.5`.
 
 ### Download
-[https://github.com/marc2k3/foo_listenbrainz2/releases](https://github.com/marc2k3/foo_listenbrainz2/releases)
+[https://github.com/phw/foo_listenbrainz2/releases](https://github.com/phw/foo_listenbrainz2/releases)
 
 ### Installation
 
@@ -17,9 +23,9 @@
 
 ### Why foo_listenbrainz2?
 
-Somebody else already beat me with the original name here: [https://github.com/medvid/foo_listenbrainz](https://github.com/medvid/foo_listenbrainz)
+There is already a component with the original name here:  [https://github.com/medvid/foo_listenbrainz](https://github.com/medvid/foo_listenbrainz)
 
-I decided to write my own because the above version blocks the main thread and freezes the UI when submitting. Also, my version submits artist/recording [MBID](https://musicbrainz.org/doc/MusicBrainz_Identifier)s if present in your files. This makes artist/title links on your recent listens page clickable and will lead you to the respective pages on [musicbrainz.org](https://musicbrainz.org)
+In contrast to the above version foo_listenbrainz2 does not block the main thread and does not freeze the UI when submitting. Also, this version submits artist/recording [MBID](https://musicbrainz.org/doc/MusicBrainz_Identifier)s if present in your files. This makes artist/title links on your recent listens page clickable and will lead you to the respective pages on [musicbrainz.org](https://musicbrainz.org)
 
 ### Preferences
 
@@ -27,7 +33,7 @@ Enter your [ListenBrainz token](https://listenbrainz.org/profile) and check the 
 
 ![Preferences](preferences.png)
 
-Now just listen to your music and watch the `Console` for server responses and/or check your recent listens page. 
+Now just listen to your music and watch the `Console` for server responses and/or check your recent listens page.
 
 For convenience, submissions can be enabled/disabled via the main `Playback` menu. This option is only available after your token has been set.
 
@@ -63,7 +69,7 @@ Note that [foobar2000](https://foobar2000.org) does not support reading track id
 
 ### Multi-value tag handling
 
-- For artist/work [MBID](https://musicbrainz.org/doc/MusicBrainz_Identifier)s, all values are sent. 
+- For artist/work [MBID](https://musicbrainz.org/doc/MusicBrainz_Identifier)s, all values are sent.
 - By default, only the first value of any multi-value `ARTIST` tag is sent. This can be changed in the `Preferences` so all values are sent as a comma separated string. Before this option was added in `v1.1.3`, only the first value was sent.
 - For all other tags, only the first value is sent.
 

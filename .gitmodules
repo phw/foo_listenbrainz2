@@ -1,4 +1,4 @@
 [submodule "foobar2000-sdk"]
 	path = foobar2000-sdk
 	url = https://github.com/phw/foobar2000-SDK.git
-	branch = master
+	branch = main

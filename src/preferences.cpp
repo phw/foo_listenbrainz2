@@ -152,7 +152,7 @@ namespace lbz
 
 		bool get_help_url(pfc::string_base& out) override
 		{
-			out.set_string("https://github.com/EliasAlucard/foo_listenbrainz2");
+			out.set_string(help_url);
 			return true;
 		}
 

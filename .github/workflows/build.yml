@@ -61,7 +61,7 @@ jobs:
           mkdir artifacts/release/
           cd artifacts/${{ env.REPO }}-Win32/
           zip ../release/${{ env.REPO }}-$VERSION.fb2k-component *
-          cd ../artifacts/${{ env.REPO }}-x64/
+          cd ../${{ env.REPO }}-x64/
           zip ../release/${{ env.REPO }}-x64-$VERSION.fb2k-component *
 
       - name: Generate checksums

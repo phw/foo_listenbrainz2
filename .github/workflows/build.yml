@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         configuration: ['Release', 'Debug']
-        architecture: ['Win32', 'x64']
 
     steps:
     - uses: actions/checkout@v1
@@ -25,14 +24,17 @@ jobs:
         $repo = "${{ github.repository }}".Split("/")[1]
         echo "REPO=$repo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-    - name: Build
-      run: msbuild /m '/p:Platform=${{ matrix.architecture }};Configuration=${{ matrix.configuration }}' src\${{ env.REPO }}.sln
+    - name: Build Win32
+      run: msbuild /m '/p:Platform=Win32;Configuration=${{ matrix.configuration }}' src\${{ env.REPO }}.sln
+
+    - name: Build x64
+      run: msbuild /m '/p:Platform=x64;Configuration=${{ matrix.configuration }}' src\${{ env.REPO }}.sln
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.REPO }}-${{ matrix.architecture }}-${{ matrix.configuration }}
-        path: component/${{ matrix.architecture }}/
+        name: ${{ env.REPO }}-${{ matrix.configuration }}
+        path: component/
 
   release:
       runs-on: ubuntu-latest
@@ -48,21 +50,14 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: ${{ env.REPO }}-Win32-Release
-          path: artifacts/${{ env.REPO }}-Win32/
+          name: ${{ env.REPO }}-Release
+          path: artifacts/${{ env.REPO }}/
 
-      - uses: actions/download-artifact@v1
-        with:
-          name: ${{ env.REPO }}-x64-Release
-          path: artifacts/${{ env.REPO }}-x64/
-
-      - name: Generate fb2k component packages
+      - name: Generate fb2k component package
         run: |
           mkdir artifacts/release/
-          cd artifacts/${{ env.REPO }}-Win32/
+          cd artifacts/${{ env.REPO }}/
           zip ../release/${{ env.REPO }}-$VERSION.fb2k-component *
-          cd ../${{ env.REPO }}-x64/
-          zip ../release/${{ env.REPO }}-x64-$VERSION.fb2k-component *
 
       - name: Generate checksums
         run: |

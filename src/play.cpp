@@ -242,16 +242,14 @@ namespace lbz
 			{
 				j["listen_type"] = "single";
 				j["payload"][0]["listened_at"] = pfc::fileTimeWtoU(pfc::fileTimeNow());
-
-				const char* album = info.meta_get("album", 0);
-				if (album != nullptr)
-				{
-					track_metadata["release_name"] = album;
-				}
-
-				track_metadata["additional_info"] = get_additional_info(info);
 			}
 
+			const char* album = info.meta_get("album", 0);
+			if (album != nullptr)
+			{
+				track_metadata["release_name"] = album;
+			}
+			track_metadata["additional_info"] = get_additional_info(info);
 			j["payload"][0]["track_metadata"] = track_metadata;
 
 			auto t = std::thread([=]()

@@ -1,3 +1,8 @@
+## v1.2.0
+- Support foobar2000 v2.0 dark mode
+- 64-bit build for foobar2000 v2.0
+- Fixed help URL in preferences dialog
+
 ## v1.1.3
 - Add a new `Preference` for sending all `ARTIST` tags if they're multi-value. Previous versions always sent the first value only and this remains the current default.
 

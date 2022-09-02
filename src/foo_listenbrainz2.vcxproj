@@ -114,12 +114,10 @@
       <AdditionalDependencies>../foobar2000-sdk/foobar2000/shared/shared-Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>set component_path=$(SolutionDir)..\component\$(Platform)
-set licenses_path=$(SolutionDir)..\component\licenses
+      <Command>set component_path=$(SolutionDir)..\component
 if not exist "%component_path%\." mkdir "%component_path%"
 copy /Y "$(TargetPath)" "%component_path%\"
 copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"
-xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -144,11 +142,9 @@ xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
     </Link>
     <PostBuildEvent>
       <Command>set component_path=$(SolutionDir)..\component\$(Platform)
-set licenses_path=$(SolutionDir)..\component\licenses
 if not exist "%component_path%\." mkdir "%component_path%"
 copy /Y "$(TargetPath)" "%component_path%\"
 copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"
-xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -178,12 +174,10 @@ xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
       <AdditionalDependencies>../foobar2000-sdk/foobar2000/shared/shared-Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>set component_path=$(SolutionDir)..\component\$(Platform)
-set licenses_path=$(SolutionDir)..\component\licenses
+      <Command>set component_path=$(SolutionDir)..\component
 if not exist "%component_path%\." mkdir "%component_path%"
 copy /Y "$(TargetPath)" "%component_path%\"
 copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"
-xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -214,11 +208,9 @@ xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
     </Link>
     <PostBuildEvent>
       <Command>set component_path=$(SolutionDir)..\component\$(Platform)
-set licenses_path=$(SolutionDir)..\component\licenses
 if not exist "%component_path%\." mkdir "%component_path%"
 copy /Y "$(TargetPath)" "%component_path%\"
 copy /Y "$(TargetDir)$(TargetName).pdb" "%component_path%\"
-xcopy /Y /i "%licenses_path%" "%component_path%\licenses"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -183,7 +183,11 @@ namespace lbz
 				}
 			}
 
-			additional_info["listening_from"] = "foobar2000";
+			additional_info["media_player"] = "foobar2000";
+			additional_info["media_player_version"] = core_version_info::g_get_version_string();
+			additional_info["submission_client"] = "foobar2000";
+			additional_info["submission_client_version"] = component_version;
+
 			return additional_info;
 		}
 

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "foobar2000/helpers/DarkMode.h"
 
 namespace lbz
 {
@@ -28,7 +29,7 @@ namespace lbz
 		cfg_string str_cache(guids::str_cache, defaults::str_cache);
 	}
 
-	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public preferences_page_instance
+	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public fb2k::CDarkModeHooks, public preferences_page_instance
 	{
 	public:
 		lbz_preferences_page_instance(preferences_page_callback::ptr callback) : m_callback(callback) {}
@@ -67,6 +68,9 @@ namespace lbz
 			pfc::setWindowText(m_edit_query, prefs::str_query);
 			m_edit_query.EnableWindow(enabled && prefs::check_skip.get_value());
 
+			SetDark(fb2k::isDarkMode());
+			AddDialogWithControls(*this);
+
 			return FALSE;
 		}
 
@@ -83,7 +87,7 @@ namespace lbz
 				return false;
 			}();
 
-			uint32_t state = preferences_state::resettable;
+			uint32_t state = preferences_state::resettable | preferences_state::dark_mode_supported;
 			if (has_changed) state |= preferences_state::changed;
 			return state;
 		}

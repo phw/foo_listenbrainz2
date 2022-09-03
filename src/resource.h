@@ -14,4 +14,4 @@
 #define IDC_CHECK_SKIP                  1005
 #define IDC_EDIT_USER_TOKEN             1006
 #define IDC_EDIT_QUERY                  1007
-#define IDC_SUBMIT_CLIENT_DETAILS       1008
+#define IDC_CHECK_CLIENT_DETAILS        1008

@@ -6,7 +6,7 @@ namespace lbz
 {
 	static constexpr const char* component_name = "ListenBrainz 2";
 	static constexpr const char* component_dll_name = "foo_listenbrainz2.dll";
-	static constexpr const char* component_version = "1.2.0";
+	static constexpr const char* component_version = "1.3.0";
 	static constexpr const char* component_info = "Copyright (C) 2020 marc2003, 2022 phw\n\nBuild: " __TIME__ ", " __DATE__;
 	static constexpr const char* help_url = "https://github.com/phw/foo_listenbrainz2";
 	static constexpr const char* api_url = "https://api.listenbrainz.org/1/submit-listens";

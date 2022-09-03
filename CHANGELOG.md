@@ -1,3 +1,10 @@
+## v1.3.0
+- Provide a unified package including 32 and 64 bit version of this component.
+- Submit `duration` of listened audio.
+- Replaced submission of non-standard `listening_from` with `media_player`, `media_player_version`, `submission_client` and `submission_client_version`.
+- Add preference to disable submission of the above client details.
+- The additional information is also submitted for "playing now" notifications.
+
 ## v1.2.0
 - Support foobar2000 v2.0 dark mode
 - 64-bit build for foobar2000 v2.0

@@ -95,6 +95,6 @@ This happens automatically so you don't need to do anything to trigger it. If yo
 - [foobar2000](https://foobar2000.org) does not support reading track id ([recording](https://musicbrainz.org/doc/Recording)) tags that are written to MP3s as `UFID` by [MusicBrainz Picard](https://picard.musicbrainz.org/).
 
 
-# License
+## License
 
 foo_listenbrainz2 is published under the MIT license. See [LICENSE.txt](./LICENSE.txt) for details.

@@ -30,6 +30,17 @@ jobs:
     - name: Build x64
       run: msbuild /m '/p:Platform=x64;Configuration=${{ matrix.configuration }}' src\${{ env.REPO }}.sln
 
+    - name: Copy licenses
+      run: |
+        $LICENSE_DIR="component/licenses"
+        mkdir -Force "$LICENSE_DIR"
+        copy LICENSE.txt "$LICENSE_DIR\foo_listenbrainz2-license.txt"
+        copy foobar2000-sdk\sdk-license.txt "$LICENSE_DIR\foobar2000-sdk-license.txt"
+        copy foobar2000-sdk\libPPUI\libPPUI-license.txt "$LICENSE_DIR\libPPUI-license.txt"
+        copy foobar2000-sdk\nlohmann\LICENSE.MIT "$LICENSE_DIR\JSON-for-modern-C++-license.txt"
+        copy foobar2000-sdk\pfc\pfc-license.txt "$LICENSE_DIR\pfc-license.txt"
+        copy foobar2000-sdk\wtl\MS-PL.txt "$LICENSE_DIR\wtl-license.txt"
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:

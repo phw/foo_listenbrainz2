@@ -2,6 +2,9 @@
 Release FB2K/
 Debug FB2K/
 
+component/licenses/
+component/*.fb2k-component
+
 # Created by https://www.gitignore.io/api/visualstudio
 # Edit at https://www.gitignore.io/?templates=visualstudio
 

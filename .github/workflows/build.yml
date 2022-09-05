@@ -68,7 +68,7 @@ jobs:
         run: |
           mkdir artifacts/release/
           cd artifacts/${{ env.REPO }}/
-          zip ../release/${{ env.REPO }}-$VERSION.fb2k-component *
+          zip -r ../release/${{ env.REPO }}-$VERSION.fb2k-component *
 
       - name: Generate checksums
         run: |

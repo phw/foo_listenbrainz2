@@ -22,7 +22,7 @@ BEGIN
     EDITTEXT        IDC_EDIT_USER_TOKEN, 16, 32, 200, 14, ES_PASSWORD | ES_AUTOHSCROLL
     AUTOCHECKBOX    "For multi-value ARTIST tags, send first value only", IDC_CHECK_ARTIST_FIRST, 4, 56, 180, 10
     AUTOCHECKBOX    "Submit Media Library tracks only", IDC_CHECK_LIBRARY, 4, 72, 180, 10
-    AUTOCHECKBOX    "Submit version details of foobar2000 and the ListenBrainz component", IDC_CHECK_CLIENT_DETAILS, 4, 88, 180, 10
+    AUTOCHECKBOX    "Submit version details of foobar2000 and the ListenBrainz component", IDC_CHECK_CLIENT_DETAILS, 4, 88, 240, 10
     AUTOCHECKBOX    "Skip submitting these tracks:", IDC_CHECK_SKIP, 4, 104, 180, 10
     GROUPBOX        "Query", IDC_STATIC, 4, 118, 220, 34
     EDITTEXT        IDC_EDIT_QUERY, 16, 132, 200, 14, ES_AUTOHSCROLL

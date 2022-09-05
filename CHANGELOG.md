@@ -1,3 +1,6 @@
+## v1.3.1
+- Fixed packaging not including all files (missing x64 binaries and license files), issue #4.
+
 ## v1.3.0
 - Provide a unified package including 32 and 64 bit version of this component.
 - Submit `duration` of listened audio.

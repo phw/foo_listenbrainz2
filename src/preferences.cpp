@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "foobar2000/SDK/coreDarkMode.h"
-#include "foobar2000/helpers/DarkMode.h"
 
 namespace lbz
 {
@@ -32,7 +31,7 @@ namespace lbz
 		cfg_string str_cache(guids::str_cache, defaults::str_cache);
 	}
 
-	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public fb2k::CCoreDarkModeHooks, public preferences_page_instance
+	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public preferences_page_instance
 	{
 	public:
 		lbz_preferences_page_instance(preferences_page_callback::ptr callback) : m_callback(callback) {}
@@ -75,9 +74,7 @@ namespace lbz
 			pfc::setWindowText(m_edit_query, prefs::str_query);
 			m_edit_query.EnableWindow(enabled && prefs::check_skip.get_value());
 
-			SetDark(fb2k::isDarkMode());
-			AddDialogWithControls(*this);
-
+			m_hooks.AddDialogWithControls(*this);
 			return FALSE;
 		}
 
@@ -145,6 +142,7 @@ namespace lbz
 	private:
 		CCheckBox m_check_enabled, m_check_library, m_check_client_details, m_check_skip, m_check_artist_first;
 		CEdit m_edit_user_token, m_edit_query;
+		fb2k::CCoreDarkModeHooks m_hooks;
 		preferences_page_callback::ptr m_callback;
 	};
 

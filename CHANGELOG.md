@@ -1,3 +1,7 @@
+## v1.3.2
+- Fixed display of label for submit client info option
+- Smaller DLL size due to changes in dark mode support with latest foobar2000 SDK
+
 ## v1.3.1
 - Fixed packaging not including all files (missing x64 binaries and license files), issue #4.
 

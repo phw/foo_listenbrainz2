@@ -17,7 +17,7 @@ jobs:
         submodules: recursive
 
     - name: Set up MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Set repo variable
       run: |
@@ -42,7 +42,7 @@ jobs:
         copy foobar2000-sdk\wtl\MS-PL.txt "$LICENSE_DIR\wtl-license.txt"
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ env.REPO }}-${{ matrix.configuration }}
         path: component/

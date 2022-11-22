@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "foobar2000/SDK/coreDarkMode.h"
 #include "foobar2000/helpers/DarkMode.h"
 
 namespace lbz
@@ -31,7 +32,7 @@ namespace lbz
 		cfg_string str_cache(guids::str_cache, defaults::str_cache);
 	}
 
-	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public fb2k::CDarkModeHooks, public preferences_page_instance
+	class lbz_preferences_page_instance : public CDialogImpl<lbz_preferences_page_instance>, public fb2k::CCoreDarkModeHooks, public preferences_page_instance
 	{
 	public:
 		lbz_preferences_page_instance(preferences_page_callback::ptr callback) : m_callback(callback) {}

@@ -9,7 +9,8 @@ component and hopefully to revive the development.
 
 ## Minimum requirements
 
-`Windows 7` and [foobar2000](https://foobar2000.org) `v1.5`.
+`Windows 7` and [foobar2000](https://foobar2000.org) `v1.5`. This component is
+compatible with foobar2000 `v2.0`, both 32 and 64 bit.
 
 
 ## Download

@@ -16,7 +16,7 @@ namespace lbz
 			static constexpr const char* str_user_token = "";
 			static constexpr const char* str_query = "%genre% IS k-pop";
 
-			static constexpr const char* str_cache = "[]"; // empty JSON array
+			static constexpr const char* str_cache = "null";
 		}
 
 		cfg_bool check_enabled(guids::check_enabled, defaults::check_enabled);
@@ -27,6 +27,8 @@ namespace lbz
 
 		cfg_string str_user_token(guids::str_user_token, defaults::str_user_token);
 		cfg_string str_query(guids::str_query, defaults::str_query);
+
+		listen_cache cache(guids::cache);
 
 		cfg_string str_cache(guids::str_cache, defaults::str_cache);
 	}

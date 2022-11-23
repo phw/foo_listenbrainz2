@@ -5,18 +5,10 @@ namespace lbz
 {
 	http_task::http_task(listen_type type, json data) : m_listen_type(type), m_data(data) {}
 
-	json http_task::get_cache()
-	{
-		json cache = json::parse(prefs::str_cache.get_ptr(), nullptr, false);
-		return cache.is_array() ? cache : json::array();
-	}
-
 	void http_task::cache()
 	{
-		json cache = get_cache();
-		cache.emplace_back(m_data["payload"][0]);
-		spam(PFC_string_formatter() << "The cache now contains " << cache.size() << " listen(s)");
-		prefs::str_cache = cache.dump().c_str();
+		prefs::cache.add(m_data["payload"][0]);
+		spam(PFC_string_formatter() << "The cache now contains " << prefs::cache.size() << " listen(s)");
 	}
 
 	void http_task::process_response(json j)
@@ -47,33 +39,27 @@ namespace lbz
 		}
 		else if (m_listen_type == listen_type::import)
 		{
+			listen_cache* cache = &prefs::cache;
 			if (ok)
 			{
 				spam("Cached listens submitted OK!");
 
-				json cache = get_cache();
-				if (cache.size() <= cache_max)
+				if (cache->size() <= cache_max)
 				{
-					reset_cache();
+					cache->reset();
 				}
 				else
 				{
-					json tmp(cache.begin() + cache_max, cache.end());
-					prefs::str_cache = tmp.dump().c_str();
+					cache->drop(cache_max);
 					submit_cache();
 				}
 			}
 			else if (bad)
 			{
 				spam("Submission of the cache was refused because one or more 'listens' were malformed. The cache will now be reset.");
-				reset_cache();
+				cache->reset();
 			}
 		}
-	}
-
-	void http_task::reset_cache()
-	{
-		prefs::str_cache = "[]";
 	}
 
 	void http_task::run()
@@ -118,19 +104,15 @@ namespace lbz
 
 	void http_task::submit_cache()
 	{
-		json cache = get_cache();
-		if (cache.empty()) return;
-
-		if (cache.size() > cache_max)
-		{
-			cache.get_ref<json::array_t&>().resize(cache_max);
-		}
+		listen_cache* cache = &prefs::cache;
+		if (cache->empty()) return;
+		json batch = cache->get_batch(cache_max);
 
 		json j;
 		j["listen_type"] = "import";
-		j["payload"] = cache;
+		j["payload"] = batch;
 
-		spam(PFC_string_formatter() << "Now submitting " << cache.size() << " listen(s) from the cache.");
+		spam(PFC_string_formatter() << "Now submitting " << batch.size() << " listen(s) from the cache.");
 
 		http_task task(listen_type::import, j);
 		task.run();

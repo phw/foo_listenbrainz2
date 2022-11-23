@@ -10,10 +10,8 @@ namespace lbz
 		void run();
 
 	private:
-		json get_cache();
 		void cache();
 		void process_response(json j);
-		void reset_cache();
 		void submit_cache();
 
 		json m_data;

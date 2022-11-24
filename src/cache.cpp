@@ -7,14 +7,13 @@ namespace lbz
 
 	void listen_cache::add(json data)
 	{
-		m_lock.enterWrite();
+		PFC_INSYNC_WRITE(m_lock);
 		m_cache.emplace_back(data);
-		m_lock.leaveWrite();
 	}
 
 	json listen_cache::get_batch(size_t count)
 	{
-		m_lock.enterRead();
+		PFC_INSYNC_READ(m_lock);
 		if (m_cache.size() > count)
 		{
 			return json(m_cache.begin(), m_cache.begin() + count);
@@ -23,37 +22,34 @@ namespace lbz
 		{
 			return json(m_cache);
 		}
-
-		m_lock.leaveRead();
 	}
 
 	void listen_cache::drop(size_t count)
 	{
-		m_lock.enterWrite();
+		PFC_INSYNC_WRITE(m_lock);
 		m_cache = json(m_cache.begin() + count, m_cache.end());
-		m_lock.leaveWrite();
 	}
 
 	void listen_cache::reset()
 	{
-		m_lock.enterWrite();
+		PFC_INSYNC_WRITE(m_lock);
 		m_cache = json::array();
-		m_lock.leaveWrite();
 	}
 
 	bool listen_cache::empty() {
+		PFC_INSYNC_READ(m_lock);
 		return m_cache.empty();
 	}
 
 	size_t listen_cache::size() {
+		PFC_INSYNC_READ(m_lock);
 		return m_cache.size();
 	}
 
 	void listen_cache::get_data_raw(stream_writer* stream, abort_callback& abort)
 	{
-		m_lock.enterRead();
+		PFC_INSYNC_READ(m_lock);
 		stream->write_string(m_cache.dump(), abort);
-		m_lock.leaveRead();
 	}
 
 	void listen_cache::set_data_raw(stream_reader* stream, t_size sizehint, abort_callback& abort)
@@ -61,9 +57,8 @@ namespace lbz
 		json cache = json::parse(stream->read_string(abort).get_ptr(), nullptr, false);
 		if (cache.is_array())
 		{
-			m_lock.enterWrite();
+			PFC_INSYNC_WRITE(m_lock);
 			m_cache = cache;
-			m_lock.leaveWrite();
 			spam(PFC_string_formatter() << "Loaded cache with " << m_cache.size() << " listen(s)");
 		}
 		else
@@ -76,7 +71,7 @@ namespace lbz
 	{
 		json legacy_cache = json::parse(prefs::str_cache.get_ptr(), nullptr, false);
 		prefs::str_cache = "null";  // Reset the legacy cache
-		m_lock.enterWrite();
+		PFC_INSYNC_WRITE(m_lock);
 		if (legacy_cache.is_array())
 		{
 			m_cache = legacy_cache;
@@ -87,7 +82,5 @@ namespace lbz
 			m_cache = json::array();
 			spam(PFC_string_formatter() << "Initialized empty listen cache");
 		}
-
-		m_lock.leaveWrite();
 	}
 }

@@ -20,5 +20,6 @@ namespace lbz
 		void set_default();
 
 		json m_cache;
+		pfc::readWriteLock m_lock;
 	};
 }

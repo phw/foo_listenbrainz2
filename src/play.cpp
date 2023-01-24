@@ -31,6 +31,8 @@ namespace lbz
 		"tracknumber",
 	};
 
+	static const size_t min_playback_duration = 240U;
+
 	class lbz_play_callback_static : public play_callback_static
 	{
 	public:
@@ -43,14 +45,18 @@ namespace lbz
 		{
 			m_counter = 0;
 			const double length = handle->get_length();
-			if (length >= 5.0 && prefs::check_enabled.get_value())
+			m_target = SIZE_MAX; // ignore this track unless it matches below
+			if (prefs::check_enabled.get_value())
 			{
-				const size_t half = static_cast<size_t>(std::round(length / 2));
-				m_target = std::min<size_t>(half, 240U);
-			}
-			else
-			{
-				m_target = SIZE_MAX;
+				if (length >= 5.0)
+				{
+					const size_t half = static_cast<size_t>(std::round(length / 2));
+					m_target = std::min<size_t>(half, min_playback_duration);
+				}
+				else if (length == 0.0)
+				{
+					m_target = min_playback_duration;
+				}
 			}
 		}
 
@@ -192,7 +198,11 @@ namespace lbz
 				}
 			}
 
-			additional_info["duration"] = info.get_length();
+			const double length = info.get_length();
+			if (length > 0.0)
+			{
+				additional_info["duration"] = length;
+			}
 
 			if (prefs::check_client_details.get_value()) {
 				additional_info["media_player"] = "foobar2000";

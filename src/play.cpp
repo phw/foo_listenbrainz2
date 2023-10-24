@@ -141,9 +141,14 @@ namespace lbz
 					{
 						additional_info["albumartist"] = value;
 					}
-					if (name == "tracknumber")
+					else if (name == "discnumber" || name == "totaldiscs" || name == "totaltracks" || name == "tracknumber")
 					{
-						additional_info[name] = stoi(value);
+						try {
+							additional_info[name] = stoi(value);
+						}
+						catch (const std::invalid_argument& e) {
+							additional_info[name] = value;
+						}
 					}
 					else
 					{

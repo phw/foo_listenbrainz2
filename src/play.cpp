@@ -141,6 +141,10 @@ namespace lbz
 					{
 						additional_info["albumartist"] = value;
 					}
+					if (name == "tracknumber")
+					{
+						additional_info[name] = stoi(value);
+					}
 					else
 					{
 						additional_info[name] = value;

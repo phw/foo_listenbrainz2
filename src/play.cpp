@@ -192,7 +192,11 @@ namespace lbz
 				}
 			}
 
-			additional_info["duration"] = info.get_length();
+			const double length = info.get_length();
+			if (length > 0.0)
+			{
+				additional_info["duration_ms"] = (unsigned long)round(length * 1000);
+			}
 
 			if (prefs::check_client_details.get_value()) {
 				additional_info["media_player"] = "foobar2000";

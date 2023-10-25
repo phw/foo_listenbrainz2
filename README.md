@@ -72,7 +72,7 @@ These additional tags are sent if present:
 - `MUSICBRAINZ_RELEASEGROUPID / MUSICBRAINZ RELEASE GROUP ID`
 - `MUSICBRAINZ_RELEASETRACKID / MUSICBRAINZ RELEASE TRACK ID`
 - `MUSICBRAINZ_WORKID / MUSICBRAINZ WORK ID`
-- The track's duration in seconds
+- The track's duration in milliseconds
 
 Note that [foobar2000](https://foobar2000.org) does not support reading track id ([recording](https://musicbrainz.org/doc/Recording)) tags that are written to MP3s as `UFID` by [MusicBrainz Picard](https://picard.musicbrainz.org/).
 

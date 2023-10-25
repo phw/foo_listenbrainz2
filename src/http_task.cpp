@@ -102,7 +102,7 @@ namespace lbz
 		}
 	}
 
-	void http_task::submit_cache()
+	void submit_cache()
 	{
 		listen_cache* cache = &prefs::cache;
 		if (cache->empty()) return;
@@ -116,5 +116,14 @@ namespace lbz
 
 		http_task task(listen_type::import, j);
 		task.run();
+	}
+
+	void submit_cache_async()
+	{
+		auto t = std::thread([=]()
+			{
+				submit_cache();
+			});
+		t.detach();
 	}
 }

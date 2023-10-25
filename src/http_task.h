@@ -12,9 +12,11 @@ namespace lbz
 	private:
 		void cache();
 		void process_response(json j);
-		void submit_cache();
 
 		json m_data;
 		listen_type m_listen_type;
 	};
+
+	void submit_cache();
+	void submit_cache_async();
 }

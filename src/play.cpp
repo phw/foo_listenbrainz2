@@ -254,7 +254,8 @@ namespace lbz
 			else if (type == listen_type::single)
 			{
 				j["listen_type"] = "single";
-				j["payload"][0]["listened_at"] = pfc::fileTimeWtoU(pfc::fileTimeNow());
+				// Set listening time to start of playback
+				j["payload"][0]["listened_at"] = pfc::fileTimeWtoU(pfc::fileTimeNow()) - m_counter;
 			}
 
 			const char* album = info.meta_get("album", 0);

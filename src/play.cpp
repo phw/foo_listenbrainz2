@@ -47,10 +47,12 @@ namespace lbz
 			{
 				const size_t half = static_cast<size_t>(std::round(length / 2));
 				m_target = std::min<size_t>(half, 240U);
+				m_listened_at = pfc::fileTimeWtoU(pfc::fileTimeNow());
 			}
 			else
 			{
 				m_target = SIZE_MAX;
+				m_listened_at = 0;
 			}
 		}
 
@@ -255,7 +257,7 @@ namespace lbz
 			{
 				j["listen_type"] = "single";
 				// Set listening time to start of playback
-				j["payload"][0]["listened_at"] = pfc::fileTimeWtoU(pfc::fileTimeNow()) - m_counter;
+				j["payload"][0]["listened_at"] = m_listened_at;
 			}
 
 			const char* album = info.meta_get("album", 0);
@@ -277,6 +279,7 @@ namespace lbz
 
 		size_t m_counter = 0;
 		size_t m_target = SIZE_MAX;
+		uint64_t m_listened_at = 0;
 		titleformat_object::ptr m_obj;
 	};
 

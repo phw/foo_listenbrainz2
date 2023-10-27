@@ -1,3 +1,12 @@
+## v1.4.0
+- The submitted listening time is now set to start of playback of the submitted track
+- Submit cached listens on application start
+- Submit duration as milliseconds
+- Fix submission of `discnumber`, `totaldiscs`, `totaltracks` and `tracknumber` as integers (#12, @redactedscribe)
+- Fixed submitting "foo_listenbrainz2" for `submission_client` (#13, @redactedscribe)
+- Options: Change label of enable option to "Enable submission"
+- Cleanup of dark mode code (@marc2k3)
+
 ## v1.3.2
 - Fixed display of label for submit client info option
 - Smaller DLL size due to changes in dark mode support with latest foobar2000 SDK

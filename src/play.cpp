@@ -148,7 +148,7 @@ namespace lbz
 						try {
 							additional_info[name] = stoi(value);
 						}
-						catch (const std::invalid_argument& e) {
+						catch (const std::invalid_argument&) {
 							additional_info[name] = value;
 						}
 					}

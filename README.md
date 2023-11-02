@@ -2,9 +2,7 @@
 
 A foobar2000 component to submit the music you listened to to [ListenBrainz](https://listenbrainz.org).
 
-This component was originally written by [marc2k3](https://github.com/marc2k3/).
-This repository is an attempt to preserve the source code of this excellent
-component and hopefully to revive the development.
+This component was originally written by [marc2k3](https://github.com/marc2k3/). This repository is an attempt to preserve the source code of this excellent component and hopefully to revive the development.
 
 
 ## Minimum requirements
@@ -12,13 +10,9 @@ component and hopefully to revive the development.
 `Windows 7` and [foobar2000](https://foobar2000.org) `v1.5` or later. This component is compatible with foobar2000 `v2.0`, both 32 and 64 bit.
 
 
-## Download
-[https://github.com/phw/foo_listenbrainz2/releases](https://github.com/phw/foo_listenbrainz2/releases)
+## Download & Installation
 
-
-## Installation
-
-[https://wiki.hydrogenaud.io/index.php?title=Foobar2000:How_to_install_a_component](https://wiki.hydrogenaud.io/index.php?title=Foobar2000:How_to_install_a_component)
+Download the component archive (`.fb2k-component`) from the [release page](https://github.com/phw/foo_listenbrainz2/releases). Follow the instructions [How to install a component](https://wiki.hydrogenaud.io/index.php?title=Foobar2000:How_to_install_a_component) in the Foobar2000 Wiki.
 
 
 ## What is ListenBrainz?

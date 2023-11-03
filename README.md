@@ -1,6 +1,6 @@
 # ListenBrainz 2
 
-A foobar2000 component to submit the music you listened to to [ListenBrainz](https://listenbrainz.org).
+A foobar2000 component to submit the music you listened to to [ListenBrainz](https://listenbrainz.org) or another ListenBrainz compatible scrobble server (for example [Maloja](https://github.com/krateng/maloja)).
 
 This component was originally written by [marc2k3](https://github.com/marc2k3/). This repository is an attempt to preserve the source code of this excellent component and hopefully to revive the development.
 
@@ -35,6 +35,8 @@ Enter your [ListenBrainz token](https://listenbrainz.org/profile) and check the 
 `File > Preferences > Tools > ListenBrainz 2`.
 
 ![Preferences](preferences.png)
+
+If you use another ListenBrainz compatible server, also adjust the URL. Make sure to append `/submit-listens` to the standard API URL of your server. Otherwise you will get `500` response errors.
 
 Now just listen to your music and watch the `Console` for server responses and/or check your recent listens page.
 

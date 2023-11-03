@@ -18,15 +18,19 @@ STYLE DS_SETFONT | WS_CHILD
 FONT 8, "MS Shell Dlg 2", 400, 0, 0x0
 BEGIN
     AUTOCHECKBOX    "Enable submission", IDC_CHECK_ENABLED, 4, 4, 180, 10
-    GROUPBOX        "User token", IDC_STATIC, 4, 18, 220, 34
-    EDITTEXT        IDC_EDIT_USER_TOKEN, 16, 32, 200, 14, ES_PASSWORD | ES_AUTOHSCROLL
-    AUTOCHECKBOX    "For multi-value ARTIST tags, send first value only", IDC_CHECK_ARTIST_FIRST, 4, 56, 180, 10
-    AUTOCHECKBOX    "Submit Media Library tracks only", IDC_CHECK_LIBRARY, 4, 72, 180, 10
-    AUTOCHECKBOX    "Submit version details of foobar2000 and the ListenBrainz component", IDC_CHECK_CLIENT_DETAILS, 4, 88, 240, 10
-    AUTOCHECKBOX    "Skip submitting these tracks:", IDC_CHECK_SKIP, 4, 104, 180, 10
-    GROUPBOX        "Query", IDC_STATIC, 4, 118, 220, 34
-    EDITTEXT        IDC_EDIT_QUERY, 16, 132, 200, 14, ES_AUTOHSCROLL
+    GROUPBOX        "Listenbrainz API", IDC_STATIC, 4, 18, 220, 58
+    EDITTEXT        IDC_EDIT_USER_TOKEN, 58, 32, 158, 14, ES_AUTOHSCROLL | ES_PASSWORD
+    EDITTEXT        IDC_EDIT_API_URL, 57, 55, 159, 14, ES_AUTOHSCROLL
+    AUTOCHECKBOX    "For multi-value ARTIST tags, send first value only", IDC_CHECK_ARTIST_FIRST, 7, 87, 180, 10
+    AUTOCHECKBOX    "Submit Media Library tracks only", IDC_CHECK_LIBRARY, 7, 103, 180, 10
+    AUTOCHECKBOX    "Submit version details of foobar2000 and the ListenBrainz component", IDC_CHECK_CLIENT_DETAILS, 7, 119, 240, 10
+    AUTOCHECKBOX    "Skip submitting these tracks:", IDC_CHECK_SKIP, 7, 135, 180, 10
+    GROUPBOX        "Query", IDC_STATIC, 7, 149, 220, 34
+    EDITTEXT        IDC_EDIT_QUERY, 19, 163, 200, 14, ES_AUTOHSCROLL
+    LTEXT           "User Token:", IDC_STATIC, 18, 35, 40, 8, SS_LEFT
+    LTEXT           "API URL:", IDC_STATIC, 27, 57, 30, 8, SS_LEFT
 END
+
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

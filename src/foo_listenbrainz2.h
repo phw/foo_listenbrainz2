@@ -47,11 +47,11 @@ namespace lbz
 		return regex_search(mbid, rx);
 	}
 
-	static bool is_valid_token(const char* mbid)
+	static bool is_valid_token(const char* token)
 	{
-		if (mbid == nullptr) return false;
-		// 62 is the token length of Maloja. There's probably a better way to validate the token.
-		if (is_uuid(mbid) || (strlen(mbid) == 62 )) return true;
+		if (token == nullptr) return false;
+		// 62 is the default token length of Maloja. There's probably a better way to validate the token.
+		if (is_uuid(token) || (strlen(token) == 62 )) return true;
 		
 		return false;
 	}

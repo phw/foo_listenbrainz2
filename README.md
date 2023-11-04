@@ -36,7 +36,9 @@ Enter your [ListenBrainz token](https://listenbrainz.org/profile) and check the 
 
 ![Preferences](preferences.png)
 
-If you use another ListenBrainz compatible server, also adjust the URL. Make sure to append `/submit-listens` to the standard API URL of your server. Otherwise you will get `500` response errors.
+By default the component submits to the ListenBrainz server using the endpoint `https://api.listenbrainz.org/1/submit-listens`.
+
+If you use another ListenBrainz compatible server, also adjust the URL and use a token provided by your server. Make sure to append `/submit-listens` to the standard API URL of your server. Otherwise you will get `500` response errors. For [Maloja](https://github.com/krateng/maloja) servers the API URL is in the form of `https://{hostname}/apis/listenbrainz/1/submit-listens`.
 
 Now just listen to your music and watch the `Console` for server responses and/or check your recent listens page.
 

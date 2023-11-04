@@ -24,7 +24,7 @@ namespace lbz
 
 		bool get_display(t_uint32 index, pfc::string_base& out, t_uint32& flags) override
 		{
-			if (!is_valid_token(prefs::str_user_token.get_ptr())) flags = flag_disabled;
+			if (!is_valid_token()) flags = flag_disabled;
 			else if (prefs::check_enabled.get_value()) flags = flag_checked;
 			get_name(index, out);
 			return true;
@@ -37,7 +37,7 @@ namespace lbz
 
 		void execute(t_uint32 index, service_ptr_t<service_base> callback) override
 		{
-			if (is_valid_token(prefs::str_user_token.get_ptr()))
+			if (is_valid_token())
 			{
 				prefs::check_enabled = !prefs::check_enabled.get_value();
 			}
@@ -45,10 +45,10 @@ namespace lbz
 
 		void get_name(t_uint32 index, pfc::string_base& out) override
 		{
-			if (strcmp(prefs::str_api_url.get_ptr(), "https://api.listenbrainz.org/1/submit-listens") == 0) {
+			if (is_listenbrainz()) {
 				out = "Submit to ListenBrainz";
 			} else {
-				out = "Submit to Scrobble Server";
+				out = "Submit to scrobble server";
 			}
 		}
 	};

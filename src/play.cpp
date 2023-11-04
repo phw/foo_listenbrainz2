@@ -88,7 +88,7 @@ namespace lbz
 
 			if (!prefs::check_enabled.get_value()) return false;
 
-			if (!is_valid_token(prefs::str_user_token))
+			if (!is_valid_token())
 			{
 				if (report) spam("Token not set. Not submitting.");
 				return false;
@@ -172,7 +172,7 @@ namespace lbz
 						for (size_t i = 0; i < count; ++i)
 						{
 							const char* value = info.meta_enum_value(idx, i);
-							if (is_valid_token(value))
+							if (is_uuid(value))
 							{
 								values.emplace_back(value);
 							}
@@ -186,8 +186,8 @@ namespace lbz
 				else
 				{
 					const char* value = info.meta_get(primary.c_str(), 0);
-					if (!is_valid_token(value)) value = info.meta_get(secondary.c_str(), 0);
-					if (is_valid_token(value))
+					if (!is_uuid(value)) value = info.meta_get(secondary.c_str(), 0);
+					if (is_uuid(value))
 					{
 						additional_info[name] = value;
 					}

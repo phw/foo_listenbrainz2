@@ -5,21 +5,6 @@ namespace lbz
 {
 	namespace prefs
 	{
-		namespace defaults
-		{
-			static constexpr bool check_enabled = false;
-			static constexpr bool check_artist_first = true;
-			static constexpr bool check_library = false;
-			static constexpr bool check_skip = false;
-			static constexpr bool check_client_details = true;
-
-			static constexpr const char* str_user_token = "";
-			static constexpr const char* str_api_url = "https://api.listenbrainz.org/1/submit-listens";
-			static constexpr const char* str_query = "%genre% IS k-pop";
-
-			static constexpr const char* str_cache = "null";
-		}
-
 		cfg_bool check_enabled(guids::check_enabled, defaults::check_enabled);
 		cfg_bool check_artist_first(guids::check_artist_first, defaults::check_artist_first);
 		cfg_bool check_library(guids::check_library, defaults::check_library);

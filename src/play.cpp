@@ -88,7 +88,7 @@ namespace lbz
 
 			if (!prefs::check_enabled.get_value()) return false;
 
-			if (!is_uuid(prefs::str_user_token))
+			if (!is_valid_token())
 			{
 				if (report) spam("Token not set. Not submitting.");
 				return false;

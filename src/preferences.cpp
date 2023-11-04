@@ -5,20 +5,6 @@ namespace lbz
 {
 	namespace prefs
 	{
-		namespace defaults
-		{
-			static constexpr bool check_enabled = false;
-			static constexpr bool check_artist_first = true;
-			static constexpr bool check_library = false;
-			static constexpr bool check_skip = false;
-			static constexpr bool check_client_details = true;
-
-			static constexpr const char* str_user_token = "";
-			static constexpr const char* str_query = "%genre% IS k-pop";
-
-			static constexpr const char* str_cache = "null";
-		}
-
 		cfg_bool check_enabled(guids::check_enabled, defaults::check_enabled);
 		cfg_bool check_artist_first(guids::check_artist_first, defaults::check_artist_first);
 		cfg_bool check_library(guids::check_library, defaults::check_library);
@@ -26,6 +12,7 @@ namespace lbz
 		cfg_bool check_client_details(guids::check_client_details, defaults::check_client_details);
 
 		cfg_string str_user_token(guids::str_user_token, defaults::str_user_token);
+		cfg_string str_api_url(guids::str_api_url, defaults::str_api_url);
 		cfg_string str_query(guids::str_query, defaults::str_query);
 
 		listen_cache cache(guids::cache);
@@ -72,6 +59,10 @@ namespace lbz
 			pfc::setWindowText(m_edit_user_token, prefs::str_user_token);
 			m_edit_user_token.EnableWindow(enabled);
 
+			m_edit_api_url = GetDlgItem(IDC_EDIT_API_URL);
+			pfc::setWindowText(m_edit_api_url, prefs::str_api_url);
+			m_edit_api_url.EnableWindow(enabled);
+
 			m_edit_query = GetDlgItem(IDC_EDIT_QUERY);
 			pfc::setWindowText(m_edit_query, prefs::str_query);
 			m_edit_query.EnableWindow(enabled && prefs::check_skip.get_value());
@@ -90,6 +81,7 @@ namespace lbz
 				if (m_check_client_details.IsChecked() != prefs::check_client_details.get_value()) return true;
 				if (m_check_skip.IsChecked() != prefs::check_skip.get_value()) return true;
 				if (!pfc::getWindowText(m_edit_user_token).equals(prefs::str_user_token)) return true;
+				if (!pfc::getWindowText(m_edit_api_url).equals(prefs::str_api_url)) return true;
 				if (!pfc::getWindowText(m_edit_query).equals(prefs::str_query)) return true;
 				return false;
 			}();
@@ -107,6 +99,7 @@ namespace lbz
 			prefs::check_client_details = m_check_client_details.IsChecked();
 			prefs::check_skip = m_check_skip.IsChecked();
 			prefs::str_user_token = pfc::getWindowText(m_edit_user_token);
+			prefs::str_api_url = pfc::getWindowText(m_edit_api_url);
 			prefs::str_query = pfc::getWindowText(m_edit_query);
 		}
 
@@ -118,6 +111,7 @@ namespace lbz
 			m_check_client_details.EnableWindow(enabled);
 			m_check_skip.EnableWindow(enabled);
 			m_edit_user_token.EnableWindow(enabled);
+			m_edit_api_url.EnableWindow(enabled);
 			m_edit_query.EnableWindow(enabled && m_check_skip.IsChecked());
 
 			m_callback->on_state_changed();
@@ -131,6 +125,7 @@ namespace lbz
 			m_check_client_details.SetCheck(prefs::defaults::check_client_details);
 			m_check_skip.SetCheck(prefs::defaults::check_skip);
 			pfc::setWindowText(m_edit_user_token, prefs::defaults::str_user_token);
+			pfc::setWindowText(m_edit_api_url, prefs::defaults::str_api_url);
 			pfc::setWindowText(m_edit_query, prefs::defaults::str_query);
 
 			on_change();
@@ -143,7 +138,7 @@ namespace lbz
 
 	private:
 		CCheckBox m_check_enabled, m_check_library, m_check_client_details, m_check_skip, m_check_artist_first;
-		CEdit m_edit_user_token, m_edit_query;
+		CEdit m_edit_user_token, m_edit_api_url, m_edit_query;
 		fb2k::CCoreDarkModeHooks m_hooks;
 		preferences_page_callback::ptr m_callback;
 	};

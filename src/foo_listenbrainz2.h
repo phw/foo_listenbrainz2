@@ -9,7 +9,6 @@ namespace lbz
 	static constexpr const char* component_version = "1.4.0";
 	static constexpr const char* component_info = "Copyright (C) 2020 marc2003\nCopyright (C) 2022-2023 phw\n\nBuild: " __TIME__ ", " __DATE__;
 	static constexpr const char* help_url = "https://github.com/phw/foo_listenbrainz2";
-	static constexpr const char* api_url = "https://api.listenbrainz.org/1/submit-listens";
 	static constexpr size_t cache_max = 50;
 
 	namespace guids
@@ -25,6 +24,7 @@ namespace lbz
 		static constexpr GUID check_client_details = { 0x9733b0e7, 0xd549, 0x40ab, { 0xb4, 0xc0, 0x90, 0x99, 0x37, 0x27, 0xae, 0xcd } };
 
 		static constexpr GUID str_user_token = { 0x3d9164f6, 0xb3b0, 0x403f, { 0xb1, 0x42, 0x44, 0x7c, 0x5d, 0xdf, 0x4f, 0x15 } };
+		static constexpr GUID str_api_url = { 0x136af1b5, 0xf717, 0x4217, { 0xde, 0x59, 0x97, 0xcc, 0x17, 0xb3, 0xa1, 0x43 } };
 		static constexpr GUID str_query = { 0xc026551f, 0xfa92, 0x4917, { 0xa5, 0xbe, 0x28, 0x4f, 0x9b, 0x6d, 0x80, 0xdf } };
 
 		static constexpr GUID cache = { 0x253657c9, 0xef78, 0x457c, { 0x97, 0xd3, 0xbc, 0x7, 0x19, 0xa4, 0x57, 0xea } };

@@ -61,6 +61,7 @@ namespace lbz
 
 			m_edit_api_url = GetDlgItem(IDC_EDIT_API_URL);
 			pfc::setWindowText(m_edit_api_url, prefs::str_api_url);
+			m_edit_api_url.SetCueBannerText(pfc::stringcvt::string_os_from_utf8(prefs::defaults::str_api_url));
 			m_edit_api_url.EnableWindow(enabled);
 
 			m_edit_query = GetDlgItem(IDC_EDIT_QUERY);

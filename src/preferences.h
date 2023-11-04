@@ -36,11 +36,28 @@ namespace lbz
 		extern cfg_string str_cache;
 	}
 
+	static const char* get_api_url()
+	{
+		if (strlen(prefs::str_api_url.get_ptr()) == 0)
+		{
+			return prefs::defaults::str_api_url;
+		}
+		else
+		{
+			return prefs::str_api_url;
+		}
+	}
+
 	// Returns true, if the API URL is the default ListenBrainz service.
 	static bool is_listenbrainz()
 	{
-		if (strcmp(prefs::str_api_url.get_ptr(), prefs::defaults::str_api_url) == 0) return true;
-		
+		const char* api_url = prefs::str_api_url.get_ptr();
+		if (strlen(api_url) == 0
+			|| strcmp(api_url, prefs::defaults::str_api_url) == 0)
+		{
+			return true;
+		}
+
 		return false;
 	}
 
@@ -48,11 +65,11 @@ namespace lbz
 	{
 		// empty token
 		if (prefs::str_user_token.get_ptr() == nullptr) return false;
-		// Default ListenBrainz service 
+		// Default ListenBrainz service
 		if (is_listenbrainz()) return is_uuid(prefs::str_user_token.get_ptr());
 		// Custom server
 		if (strlen(prefs::str_user_token.get_ptr()) > 0) return true;
-		
+
 		return false;
 	}
 }

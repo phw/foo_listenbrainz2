@@ -74,7 +74,7 @@ namespace lbz
 
 		try
 		{
-			auto response = request->run_ex(prefs::str_api_url, fb2k::noAbort);
+			auto response = request->run_ex(get_api_url(), fb2k::noAbort);
 			response->read_string_raw(buffer, fb2k::noAbort);
 
 			json j = json::parse(buffer.get_ptr(), nullptr, false);

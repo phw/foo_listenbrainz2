@@ -1,3 +1,6 @@
+## v1.5.0
+- Allow setting a custom ListenBrainz compatible server URL (like e.g. Maloja) (#18, @subjut)
+
 ## v1.4.0
 - The submitted listening time is now set to start of playback of the submitted track
 - Submit cached listens on application start

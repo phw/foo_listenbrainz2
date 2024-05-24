@@ -28,6 +28,7 @@ namespace lbz
 		BEGIN_MSG_MAP_EX(lbz_preferences_page_instance)
 			MSG_WM_INITDIALOG(OnInitDialog)
 			COMMAND_RANGE_HANDLER_EX(IDC_CHECK_ENABLED, IDC_EDIT_QUERY, OnChanged)
+			COMMAND_HANDLER_EX(IDC_BUTTON_TEST_CONNECTION, BN_CLICKED, OnTestConnectionClicked)
 		END_MSG_MAP()
 
 		enum { IDD = IDD_PREFERENCES };
@@ -67,6 +68,9 @@ namespace lbz
 			m_edit_query = GetDlgItem(IDC_EDIT_QUERY);
 			pfc::setWindowText(m_edit_query, prefs::str_query);
 			m_edit_query.EnableWindow(enabled && prefs::check_skip.get_value());
+
+			m_button_test_connection = GetDlgItem(IDC_BUTTON_TEST_CONNECTION);
+			m_button_test_connection.EnableWindow(enabled);
 
 			m_hooks.AddDialogWithControls(*this);
 			return FALSE;
@@ -114,6 +118,7 @@ namespace lbz
 			m_edit_user_token.EnableWindow(enabled);
 			m_edit_api_url.EnableWindow(enabled);
 			m_edit_query.EnableWindow(enabled && m_check_skip.IsChecked());
+			m_button_test_connection.EnableWindow(enabled);
 
 			m_callback->on_state_changed();
 		}
@@ -137,9 +142,18 @@ namespace lbz
 			on_change();
 		}
 
+		void OnTestConnectionClicked(UINT, int, CWindow)
+		{
+			// Implement the test connection functionality
+			bool success = test_connection();
+			pfc::string8 message = success ? "Connection to ListenBrainz successful!" : "Failed to connect to ListenBrainz.";
+			uMessageBox(m_hWnd, message, "Test Connection", MB_ICONINFORMATION | MB_OK);
+		}
+
 	private:
 		CCheckBox m_check_enabled, m_check_library, m_check_client_details, m_check_skip, m_check_artist_first;
 		CEdit m_edit_user_token, m_edit_api_url, m_edit_query;
+		CButton m_button_test_connection;
 		fb2k::CCoreDarkModeHooks m_hooks;
 		preferences_page_callback::ptr m_callback;
 	};

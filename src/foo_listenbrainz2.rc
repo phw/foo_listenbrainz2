@@ -21,6 +21,7 @@ BEGIN
     GROUPBOX        "ListenBrainz API", IDC_STATIC, 4, 18, 260, 58
     EDITTEXT        IDC_EDIT_USER_TOKEN, 50, 32, 205, 14, ES_AUTOHSCROLL | ES_PASSWORD
     EDITTEXT        IDC_EDIT_API_URL, 50, 55, 205, 14, ES_AUTOHSCROLL
+    PUSHBUTTON      "Test Connection", IDC_BUTTON_TEST_CONNECTION, 260, 55, 68, 14
     AUTOCHECKBOX    "For multi-value ARTIST tags, send first value only", IDC_CHECK_ARTIST_FIRST, 7, 87, 180, 10
     AUTOCHECKBOX    "Submit Media Library tracks only", IDC_CHECK_LIBRARY, 7, 103, 180, 10
     AUTOCHECKBOX    "Submit version details of foobar2000 and the ListenBrainz component", IDC_CHECK_CLIENT_DETAILS, 7, 119, 240, 10

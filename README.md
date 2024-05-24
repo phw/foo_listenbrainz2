@@ -44,6 +44,9 @@ Now just listen to your music and watch the `Console` for server responses and/o
 
 For convenience, submissions can be enabled/disabled via the main `Playback` menu. This option is only available after your token has been set. You can also configure a filter for tracks to never be submitted.
 
+### Test Connection Feature
+
+The preferences interface now includes a "Test Connection" button. This allows you to verify your connection to the ListenBrainz server or any other compatible server you have configured. Upon clicking this button, the component will attempt to connect to the server using the provided user token and API URL. A message box will display the result of the test, indicating either a successful connection or a failure to connect.
 
 ## Submissions
 

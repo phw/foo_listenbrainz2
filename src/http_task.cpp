@@ -126,4 +126,43 @@ namespace lbz
 			});
 		t.detach();
 	}
+
+    // Implement the test_connection function as specified in the plan
+    bool http_task::test_connection()
+    {
+        // Create an empty payload to test the connection without actual data submission
+        json test_payload;
+        test_payload["listen_type"] = "single";
+        test_payload["payload"] = json::array();
+
+        std::string str = test_payload.dump();
+        pfc::string8_fast buffer;
+
+        http_request_post_v2::ptr request;
+        http_client::get()->create_request("POST")->cast(request);
+        request->add_header("Authorization", PFC_string_formatter() << "Token " << prefs::str_user_token);
+        request->set_post_data(reinterpret_cast<const void*>(str.c_str()), str.length(), "application/json");
+
+        try
+        {
+            auto response = request->run_ex(get_api_url(), fb2k::noAbort);
+            response->read_string_raw(buffer, fb2k::noAbort);
+
+            json j = json::parse(buffer.get_ptr(), nullptr, false);
+            if (j.is_object())
+            {
+                auto status = j["status"];
+                const bool ok = status.is_string() && status.get_ref<const std::string&>() == "ok";
+                return ok;
+            }
+        }
+        catch (const std::exception&)
+        {
+            // If an exception occurs, the connection test is considered failed
+            return false;
+        }
+
+        // If the function reaches this point without returning, the connection test failed
+        return false;
+    }
 }

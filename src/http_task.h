@@ -8,6 +8,7 @@ namespace lbz
 		http_task(listen_type type, json data);
 
 		void run();
+        bool test_connection(); // Add the member function "test_connection"
 
 	private:
 		void cache();

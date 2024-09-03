@@ -59,7 +59,7 @@ jobs:
           echo "REPO=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: ${{ env.REPO }}-Release
           path: artifacts/${{ env.REPO }}/

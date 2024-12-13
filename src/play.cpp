@@ -159,6 +159,13 @@ namespace lbz
 				}
 			}
 
+			// Read the genres as tags
+			std::vector<std::string> genres = get_tag_all_values(info, "genre");
+			if (!genres.empty())
+			{
+				additional_info["tags"] = genres;
+			}
+
 			for (const auto& [primary, secondary, name] : mbids)
 			{
 				if (name == "artist_mbids" || name == "work_mbids")
@@ -228,6 +235,26 @@ namespace lbz
 				if (value == nullptr) return std::string();
 				return value;
 			}
+		}
+
+		std::vector<std::string> get_tag_all_values(const file_info& info, const std::string& name)
+		{
+			std::vector<std::string> values;
+			size_t idx = info.meta_find(name.c_str());
+			if (idx != SIZE_MAX)
+			{
+				const size_t count = info.meta_enum_value_count(idx);
+				for (size_t i = 0; i < count; ++i)
+				{
+					const char* value = info.meta_enum_value(idx, i);
+					if (value != nullptr)
+					{
+						values.emplace_back(value);
+					}
+				}
+			}
+
+			return values;
 		}
 
 		void submit(listen_type type)

@@ -17,7 +17,7 @@ jobs:
         submodules: recursive
 
     - name: Set up MSBuild
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Set repo variable
       run: |
@@ -42,7 +42,7 @@ jobs:
         copy foobar2000-sdk\wtl\MS-PL.txt "$LICENSE_DIR\wtl-license.txt"
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.REPO }}-${{ matrix.configuration }}
         path: component/
@@ -59,7 +59,7 @@ jobs:
           echo "REPO=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - uses: actions/download-artifact@v4.1.7
+      - uses: actions/download-artifact@v4
         with:
           name: ${{ env.REPO }}-Release
           path: artifacts/${{ env.REPO }}/

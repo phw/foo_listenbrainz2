@@ -24,10 +24,16 @@ namespace lbz
 
 		bool get_display(t_uint32 index, pfc::string_base& out, t_uint32& flags) override
 		{
-			if (!is_valid_token()) flags = flag_disabled;
-			else if (prefs::check_enabled.get_value()) flags = flag_checked;
-			get_name(index, out);
-			return true;
+			bool rv = mainmenu_commands::get_display(index, out, flags);
+			if (!is_valid_token())
+			{
+				flags |= flag_disabled;
+			}
+			else if (prefs::check_enabled.get_value())
+			{
+				flags |= flag_checked;
+			}
+			return rv;
 		}
 
 		t_uint32 get_command_count() override
